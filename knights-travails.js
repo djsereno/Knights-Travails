@@ -1,7 +1,5 @@
-// import { Node, Tree } from './binary-search';
-
-let Node = (value) => {
-  return { data: value, left: null, right: null };
+let Move = (cell, predecessor = null) => {
+  return { cell, predecessor };
 };
 
 const Board = (boardSize = 8) => {
@@ -49,31 +47,48 @@ const Board = (boardSize = 8) => {
 const Knight = (startRow = 0, startCol = 0) => {
   const row = startRow;
   const col = startCol;
+  const movement = [
+    [2, 1],
+    [2, -1],
+    [-2, 1],
+    [-2, -1],
+    [1, 2],
+    [1, -2],
+    [-1, 2],
+    [-1, -2],
+  ];
   const currentCell = () => [row, col];
 
-  const possibleMoves = () => {
-    const options = [
-      [2, 1],
-      [2, -1],
-      [-2, 1],
-      [-2, -1],
-      [1, 2],
-      [1, -2],
-      [-1, 2],
-      [-1, -2],
-    ];
-
-    const moves = options
-      .map((move) => [row + move[0], col + move[1]])
+  const possibleMoves = (origin = [row, col]) => {
+    const moves = movement
+      .map((move) => [origin[0] + move[0], origin[1] + move[1]])
       .filter((move) => move[0] >= 0 && move[0] < 8 && move[1] >= 0 && move[1] < 8);
-    console.table(moves);
     return moves;
   };
 
-  return { row, col, possibleMoves, currentCell };
+  const knightMoves = (end, start = [row, col]) => {
+    const queue = [Move(start)];
+    let moves;
+    for (let i = 0; i < 5; i++) {
+      let current = queue.shift();
+      const options = possibleMoves(current.cell);
+      moves = options
+        .filter((option) => {
+          if (!current.predecessor) return true;
+          return option.toString() !== current.predecessor.toString();
+        })
+        .map((cell) => Move(cell, current.cell));
+      queue.push(...moves);
+    }
+    console.log(queue);
+  };
+
+  return { row, col, possibleMoves, currentCell, knightMoves };
 };
 
 const board = Board(8);
 const knight = Knight(4, 4);
 board.setCurrentCell(knight.currentCell());
 board.setTargetCells(knight.possibleMoves());
+
+knight.knightMoves([5, 5]);
