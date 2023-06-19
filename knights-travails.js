@@ -27,19 +27,29 @@ const Board = (boardSize = 8) => {
     }
   };
 
-  const targetCell = (cell) => {
-    const target = document.querySelector(`.cell[data-row="${cell[0]}"][data-col="${cell[1]}"]`);
-    target.classList.add('target');
+  const getCell = (cell) => {
+    return document.querySelector(`.cell[data-row="${cell[0]}"][data-col="${cell[1]}"]`);
+  };
+
+  const setCurrentCell = (cell) => {
+    getCell(cell).classList.add('current');
+  };
+
+  const setTargetCells = (cells) => {
+    cells.forEach((cell) => {
+      getCell(cell).classList.add('target');
+    });
   };
 
   buildBoard();
 
-  return { targetCell };
+  return { setCurrentCell, setTargetCells };
 };
 
 const Knight = (startRow = 0, startCol = 0) => {
   const row = startRow;
   const col = startCol;
+  const currentCell = () => [row, col];
 
   const possibleMoves = () => {
     const options = [
@@ -60,10 +70,10 @@ const Knight = (startRow = 0, startCol = 0) => {
     return moves;
   };
 
-  return { row, col, possibleMoves };
+  return { row, col, possibleMoves, currentCell };
 };
 
 const board = Board(8);
-board.targetCell([1, 3]);
-const knight = Knight(1, 3);
-knight.possibleMoves();
+const knight = Knight(4, 4);
+board.setCurrentCell(knight.currentCell());
+board.setTargetCells(knight.possibleMoves());
