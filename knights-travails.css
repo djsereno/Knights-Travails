@@ -1,0 +1,25 @@
+* {
+  box-sizing: border-box;
+}
+
+#board {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  width: clamp(300px, 100% - 4rem, 800px);
+  margin: auto;
+  aspect-ratio: 1 / 1;
+  border: 6px double grey;
+}
+
+.cell {
+  aspect-ratio: 1 / 1;
+}
+.cell.black {
+  background-color: grey;
+}
+.cell.target {
+  background-image: url('./knight.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 80%;
+}
