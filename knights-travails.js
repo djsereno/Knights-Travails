@@ -1,6 +1,6 @@
-let Move = (cell, predecessor = null) => {
-  return { cell, predecessor };
-};
+// let Move = (cell, predecessor = null) => {
+//   return { cell, predecessor };
+// };
 
 const Board = (boardSize = 8) => {
   const size = boardSize;
@@ -66,21 +66,17 @@ const Knight = (startRow = 0, startCol = 0) => {
     return moves;
   };
 
-  const knightMoves = (end, start = [row, col]) => {
-    const queue = [Move(start)];
-    let moves;
-    for (let i = 0; i < 5; i++) {
+  const knightMoves = (start = [row, col], end) => {
+    const queue = [start];
+    const visited = new Map();
+    visited.set(start.toString(), 'ORIGIN');
+    for (let i = 0; i < 2; i++) {
       let current = queue.shift();
-      const options = possibleMoves(current.cell);
-      moves = options
-        .filter((option) => {
-          if (!current.predecessor) return true;
-          return option.toString() !== current.predecessor.toString();
-        })
-        .map((cell) => Move(cell, current.cell));
+      const moves = possibleMoves(current).filter((cell) => !visited.has(cell.toString()));
+      moves.forEach((cell) => visited.set(cell.toString(), current.toString()));
       queue.push(...moves);
     }
-    console.log(queue);
+    console.log(queue, visited);
   };
 
   return { row, col, possibleMoves, currentCell, knightMoves };
@@ -92,3 +88,19 @@ board.setCurrentCell(knight.currentCell());
 board.setTargetCells(knight.possibleMoves());
 
 knight.knightMoves([5, 5]);
+
+// const a = new Map();
+// a.set([1, 1].toString(), 1);
+// a.set([2, 2].toString(), 2);
+// a.set([3, 3].toString(), 3);
+// console.log(a);
+
+// const b = [
+//   [1, 1],
+//   [2, 2],
+//   [3, 3],
+//   [4, 4],
+//   [5, 5],
+// ];
+// console.log(b.filter((cell) => !a.has(cell.toString())));
+// console.log(a.has(b[0]));
