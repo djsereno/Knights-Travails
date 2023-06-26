@@ -5,7 +5,8 @@
 const Board = (boardSize = 8) => {
   const size = boardSize;
   const boardWrapper = document.createElement('div');
-  let currentCell;
+  let originElem;
+  let targetElem;
 
   const buildBoard = () => {
     boardWrapper.setAttribute('id', 'board');
@@ -21,16 +22,24 @@ const Board = (boardSize = 8) => {
         cell.classList.add('cell');
         cell.setAttribute('data-row', row);
         cell.setAttribute('data-col', col);
-        cell.addEventListener('click', handleClick);
+        cell.addEventListener('click', handleLeftClick);
+        cell.addEventListener('contextmenu', handleRightClick);
         boardWrapper.appendChild(cell);
       }
     }
   };
 
-  const handleClick = (event) => {
+  const handleLeftClick = (event) => {
     const row = event.currentTarget.getAttribute('data-row');
     const col = event.currentTarget.getAttribute('data-col');
     setCurrentCell([row, col]);
+  };
+
+  const handleRightClick = (event) => {
+    event.preventDefault();
+    const row = event.currentTarget.getAttribute('data-row');
+    const col = event.currentTarget.getAttribute('data-col');
+    setTargetCell([row, col]);
   };
 
   const getCell = (cell) => {
@@ -38,20 +47,20 @@ const Board = (boardSize = 8) => {
   };
 
   const setCurrentCell = (cell) => {
-    if (currentCell) currentCell.classList.remove('current');
-    currentCell = getCell(cell);
-    currentCell.classList.add('current');
+    if (originElem) originElem.classList.remove('current');
+    originElem = getCell(cell);
+    originElem.classList.add('current');
   };
 
-  const setTargetCells = (cells) => {
-    cells.forEach((cell) => {
-      getCell(cell).classList.add('target');
-    });
+  const setTargetCell = (cell) => {
+    if (targetElem) targetElem.classList.remove('target');
+    targetElem = getCell(cell);
+    targetElem.classList.add('target');
   };
 
   buildBoard();
 
-  return { setCurrentCell, setTargetCells };
+  return { setCurrentCell, setTargetCell };
 };
 
 const Knight = (startRow = 0, startCol = 0) => {
@@ -115,6 +124,5 @@ const checkValidMove = (move) => {
 const board = Board(8);
 const knight = Knight(5, 5);
 board.setCurrentCell(knight.currentCell());
-board.setTargetCells(knight.possibleMoves());
 
 knight.knightMoves([5, 5], [5, 4]);
