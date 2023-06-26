@@ -62,45 +62,49 @@ const Knight = (startRow = 0, startCol = 0) => {
   const possibleMoves = (origin = [row, col]) => {
     const moves = movement
       .map((move) => [origin[0] + move[0], origin[1] + move[1]])
-      .filter((move) => move[0] >= 0 && move[0] < 8 && move[1] >= 0 && move[1] < 8);
+      .filter((move) => checkValidMove(move));
     return moves;
   };
 
   const knightMoves = (start = [row, col], end) => {
+    if (!checkValidMove(start) || !checkValidMove(end)) return null;
+
     const queue = [start];
     const visited = new Map();
     visited.set(start.toString(), 'ORIGIN');
-    for (let i = 0; i < 2; i++) {
+    // let i = 0;
+    while (!visited.has(end.toString())) {
       let current = queue.shift();
       const moves = possibleMoves(current).filter((cell) => !visited.has(cell.toString()));
       moves.forEach((cell) => visited.set(cell.toString(), current.toString()));
       queue.push(...moves);
+      // i++;
+      // if (i > 50) return;
     }
-    console.log(queue, visited);
+
+    // console.log(queue, visited);
+
+    let path = `[${end.toString()}]`;
+    let current = end.toString();
+    while (current !== start.toString()) {
+      path = `[${visited.get(current)}] -> ${path}`;
+      current = visited.get(current);
+    }
+    console.log(path);
   };
 
   return { row, col, possibleMoves, currentCell, knightMoves };
 };
 
+const checkValidMove = (move) => {
+  const row = move[0];
+  const col = move[1];
+  return row >= 0 && row < 8 && col >= 0 && col < 8;
+};
+
 const board = Board(8);
-const knight = Knight(4, 4);
+const knight = Knight(5, 5);
 board.setCurrentCell(knight.currentCell());
 board.setTargetCells(knight.possibleMoves());
 
-knight.knightMoves([5, 5]);
-
-// const a = new Map();
-// a.set([1, 1].toString(), 1);
-// a.set([2, 2].toString(), 2);
-// a.set([3, 3].toString(), 3);
-// console.log(a);
-
-// const b = [
-//   [1, 1],
-//   [2, 2],
-//   [3, 3],
-//   [4, 4],
-//   [5, 5],
-// ];
-// console.log(b.filter((cell) => !a.has(cell.toString())));
-// console.log(a.has(b[0]));
+knight.knightMoves([5, 5], [5, 4]);
