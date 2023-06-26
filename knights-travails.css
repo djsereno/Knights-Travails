@@ -22,15 +22,18 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: 80%;
-  border: 3px solid rgb(255, 208, 0);
-  background-color: rgba(255, 208, 0, 0.3);
+  border: 3px solid rgb(0, 140, 255);
+  background-color: rgba(0, 140, 255, 0.3);
 }
 .cell.target {
   background-image: url('./finish.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: 60%;
-
   border: 3px solid green;
   background-color: rgba(0, 255, 0, 0.3);
+}
+.cell.step {
+  border: 3px solid rgb(255, 208, 0);
+  background-color: rgba(255, 208, 0, 0.3);
 }
