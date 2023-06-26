@@ -4,9 +4,10 @@
 
 const Board = (boardSize = 8) => {
   const size = boardSize;
+  const boardWrapper = document.createElement('div');
+  let currentCell;
 
   const buildBoard = () => {
-    const boardWrapper = document.createElement('div');
     boardWrapper.setAttribute('id', 'board');
     document.body.appendChild(boardWrapper);
 
@@ -20,9 +21,16 @@ const Board = (boardSize = 8) => {
         cell.classList.add('cell');
         cell.setAttribute('data-row', row);
         cell.setAttribute('data-col', col);
+        cell.addEventListener('click', handleClick);
         boardWrapper.appendChild(cell);
       }
     }
+  };
+
+  const handleClick = (event) => {
+    const row = event.currentTarget.getAttribute('data-row');
+    const col = event.currentTarget.getAttribute('data-col');
+    setCurrentCell([row, col]);
   };
 
   const getCell = (cell) => {
@@ -30,7 +38,9 @@ const Board = (boardSize = 8) => {
   };
 
   const setCurrentCell = (cell) => {
-    getCell(cell).classList.add('current');
+    if (currentCell) currentCell.classList.remove('current');
+    currentCell = getCell(cell);
+    currentCell.classList.add('current');
   };
 
   const setTargetCells = (cells) => {
