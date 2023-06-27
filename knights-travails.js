@@ -50,9 +50,13 @@ const Board = (boardSize = 8) => {
   };
 
   const setStepCells = (cells) => {
-    stepElems.forEach((cell) => cell.classList.remove('step'));
-    stepElems = cells.map(getCell);
     stepElems.forEach((cell) => {
+      cell.classList.remove('step');
+      cell.innerText = '';
+    });
+    stepElems = cells.map(getCell);
+    stepElems.forEach((cell, i) => {
+      cell.innerText = i;
       if (cell.classList.contains('current') || cell.classList.contains('target')) return;
       cell.classList.add('step');
     });
@@ -143,7 +147,6 @@ function handleClick(event) {
     knight.setTarget(row, col);
   }
 
-  console.log(knight.getOrigin(), knight.getTarget());
   if (knight.getOrigin() && knight.getTarget()) {
     const moves = knight.knightMoves();
     board.setStepCells(moves);
