@@ -1,7 +1,3 @@
-// let Move = (cell, predecessor = null) => {
-//   return { cell, predecessor };
-// };
-
 const Board = (boardSize = 8) => {
   const size = boardSize;
   const boardWrapper = document.createElement('div');

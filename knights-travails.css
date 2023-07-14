@@ -3,27 +3,47 @@
 * {
   margin: 0;
   box-sizing: border-box;
+  --color-bg: rgb(240, 240, 240);
+  --color-white: rgb(197, 197, 197);
+  --color-black: rgb(22, 22, 22);
+}
+
+body {
+  background-color: var(--color-bg);
+  font-family: 'Roboto Slab', serif;
+}
+
+.title-group {
+  margin: 2rem auto 0;
+  text-align: center;
+}
+.instructions {
+  display: flex;
+  justify-content: center;
+  padding-top: 1rem;
+  font-style: italic;
+  gap: 2rem;
 }
 
 #board {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
-  width: clamp(300px, 100% - 4rem, 800px);
-  margin: auto;
-  border: 6px double grey;
-  font-family: 'Roboto', sans-serif;
-  font-family: 'Roboto Slab', serif;
+  width: clamp(300px, 100% - 4rem, 700px);
+  margin: 1rem auto 2rem;
+  border: 6px double var(--color-black);
   aspect-ratio: 1 / 1;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
 .cell {
   padding-left: 0.5ch;
   padding-top: 0.2ch;
+  background-color: var(--color-white);
   font-size: 0.8rem;
   aspect-ratio: 1 / 1;
 }
 .cell.black {
-  background-color: grey;
+  background-color: var(--color-black);
 }
 .cell.current {
   border: 3px solid rgb(0, 140, 255);
@@ -31,15 +51,15 @@
   background-image: url('./knight.png');
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 80%;
+  background-size: 65%;
 }
 .cell.target {
   border: 3px solid green;
   background-color: rgba(0, 255, 0, 0.3);
-  background-image: url('./finish.png');
+  background-image: url('./target.png');
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 60%;
+  background-size: 65%;
 }
 .cell.step {
   border: 3px solid rgb(255, 208, 0);
