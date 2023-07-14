@@ -3,8 +3,8 @@
 * {
   margin: 0;
   box-sizing: border-box;
-  --color-bg: rgb(240, 240, 240);
-  --color-white: rgb(197, 197, 197);
+  --color-bg: rgb(141, 141, 141);
+  --color-white: rgb(226, 226, 226);
   --color-black: rgb(22, 22, 22);
 }
 
@@ -47,21 +47,21 @@ body {
 }
 .cell.current {
   border: 3px solid rgb(0, 140, 255);
-  background-color: rgba(0, 140, 255, 0.3);
-  background-image: url('./knight.png');
+  background-color: rgb(170, 217, 255);
+  background-image: url('./images/knight.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: 65%;
 }
 .cell.target {
   border: 3px solid green;
-  background-color: rgba(0, 255, 0, 0.3);
-  background-image: url('./target.png');
+  background-color: rgb(170, 255, 170);
+  background-image: url('./images/target.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: 65%;
 }
 .cell.step {
   border: 3px solid rgb(255, 208, 0);
-  background-color: rgba(255, 208, 0, 0.3);
+  background-color: rgb(255, 239, 170);
 }
